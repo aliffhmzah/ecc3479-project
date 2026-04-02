@@ -80,19 +80,19 @@ Once the process is complete, navigate to the `data/clean/` folder. You should s
 
 While the data cleaning and merging are fully automated, the following manual steps were required to establish the project environment:
 
-### 1.0 Data Sourcing & Acquisition
+### 1. Data Sourcing & Acquisition
 
 * **Sourcing:** Raw data was manually downloaded in `.xlsx` (Excel) format from the **Australian Bureau of Statistics (ABS)**, the **Reserve Bank of Australia (RBA)** and the **Australian Government Department of Education**.
 
 * **Format Conversion:** Each Excel workbook was manually reviewed and exported as a `.csv` file to ensure compatibility with the Python `pandas` engine.
 
-### 2.0 Complex Extraction (International Students)
+### 2. Complex Extraction (International Students)
 
 * **Pivot Table Extraction:** The International Student Enrolment dataset was originally provided by the Australian Government Department of Education in a pivot table format with multiple hierarchical dimensions.
 * **Manual Filtering:** To prepare this for the Python pipeline, filters were manually applied in Excel to isolate the states and months data points.
 * **Clean Export:** These filtered results were then converted into a standardized flat-file CSV format before being processed by the Python pipeline.
 
-### 3.0 File Standardization
+### 3. File Standardization
 To ensure the `code/clean_data.py` script functions correctly, the converted CSV files were moved into the `data/raw/` directory and renamed consistently to the following:
 
 * `rba_gdp_quarterly.csv`
@@ -102,7 +102,7 @@ To ensure the `code/clean_data.py` script functions correctly, the converted CSV
 * `abs_unemploymentrate_monthly.csv`
 * `abs_internationalstudent_monthly.csv`
 
-### 4.0 Documentation & Codebook
+### 4. Documentation & Codebook
 A manual review of the raw metadata was performed to identify and document:
 
 * **Units:** Distinguishing between absolute figures (Population) and scaled figures (GDP in $ Millions).
