@@ -217,6 +217,10 @@ def process_housingsupply_data(file_path):
     # Remove any empty rows to ensure consistent data analysis
     df = df.dropna()
 
+    # Convert to numeric and round to whole numbers
+    df['Housing Supply NSW (thousands)'] = pd.to_numeric(df['Housing Supply NSW (thousands)'], errors='coerce').round(0)
+    df['Housing Supply VIC (thousands)'] = pd.to_numeric(df['Housing Supply VIC (thousands)'], errors='coerce').round(0)
+
     # --- STEP 5: DATE STANDARDIZATION ---
 
     # Convert 'Date' column to datetime objects for accurate period extraction
@@ -404,7 +408,7 @@ def process_unemploymentrate_data(file_path):
     df['Unemployment rate (%)'] = pd.to_numeric(df['Unemployment rate (%)'], errors='coerce')
 
     # Downsample from Monthly to Quarterly averages (QE) to match other datasets
-    df = df.resample('QE').mean().round().reset_index()
+    df = df.resample('QE').mean().round(1).reset_index()
 
     # --- STEP 6: DATE RE-FORMATTING ---
 
