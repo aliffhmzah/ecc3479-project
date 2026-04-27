@@ -464,79 +464,96 @@ variable needed to test if student inflows correlate with the rental price
 surges observed in NSW and Victoria.
 
 """
+
 import pandas as pd
 from pathlib import Path
 
 def process_internationalstudents_data(file_path):
 
     # --- STEP 1: DATA LOADING ---
+    df = pd.read_csv(file_path)
 
-    # Load the raw monthly ABS international student enrolment dataset
-    df = pd.read_csv('../data/raw/abs_internationalstudent_monthly.csv')
     print("--- Step 1: Data Loaded ---")
     print(df.head(5))
 
     # --- STEP 2: FEATURE SELECTION ---
-
-    # Isolate NSW and VIC enrolments to match our specific geographic research focus
     df = df.iloc[:, [0, 1, 2]]
 
     # --- STEP 3: COLUMN RENAMING ---
-
-    # Standardize headers for clear identification in the final multi-variable model
-    df.columns = ['Date', 'International Student Enrolments NSW', 'International Student Enrolments VIC']
+    df.columns = [
+        'Date',
+        'International Student Enrolments NSW',
+        'International Student Enrolments VIC'
+    ]
 
     # --- STEP 4: DATE CONVERSION ---
-
-    # Convert 'Date' to datetime to enable precise filtering of the academic calendar
     df['Date_dt'] = pd.to_datetime(df['Date'], format='%b-%y', errors='coerce')
     df = df.dropna(subset=['Date_dt'])
 
-    # --- STEP 5: QUARTERLY SNAPSHOT FILTERING ---
+    # --- STEP 5: KEEP ONLY QUARTER-END MONTHS ---
+    df = df[df['Date_dt'].dt.month.isin([3, 6, 9, 12])].copy()
 
-    # Select Mar/Jun/Sep/Dec to match the frequency of Rental Price Index reporting
-    df = df[df['Date_dt'].dt.month.isin([3, 6, 9, 12])]
+    # --- STEP 6: CREATE YEAR AND QUARTER ---
+    df['Year'] = df['Date_dt'].dt.year
+    df['Quarter'] = df['Date_dt'].dt.quarter
 
-    # --- STEP 6: STANDARDIZED DATE FORMATTING ---
+    # --- STEP 7: FILTER RESEARCH TIMEFRAME ---
+    df = df[df['Year'].between(2019, 2024)]
 
-    # Format as 'YYYY-QX' to allow seamless merging with Rental and GDP datasets
-    df['Date'] = ( 
-        df['Date_dt'].dt.year.astype(str) + '-Q' + df['Date_dt'].dt.quarter.astype(str)
+    # --- STEP 8: SORT BEFORE DEDUCTION ---
+    df = df.sort_values(by=['Year', 'Quarter']).reset_index(drop=True)
+
+    # --- STEP 9: CONVERT ENROLMENT COLUMNS TO NUMERIC ---
+    enrolment_cols = [
+        'International Student Enrolments NSW',
+        'International Student Enrolments VIC'
+    ]
+
+    for col in enrolment_cols:
+        df[col] = (
+            df[col]
+            .astype(str)
+            .str.replace(',', '', regex=False)
+            .str.strip()
+        )
+
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # --- STEP 10: CONVERT YTD VALUES TO ACTUAL QUARTERLY VALUES ---
+    df[enrolment_cols] = (
+        df.groupby('Year')[enrolment_cols]
+          .diff()
+          .fillna(df[enrolment_cols])
     )
 
-    # --- STEP 7: RESEARCH TIMEFRAME FILTERING ---
+    # --- STEP 11: STANDARDIZE DATE FORMAT ---
+    df['Date'] = df['Year'].astype(str) + '-Q' + df['Quarter'].astype(str)
 
-    # Focus on 2019-2024 to capture the 'Pre-Pandemic', 'Lockdown', and 'Recovery' phases
-    years_to_keep = ['2019', '2020', '2021', '2022', '2023', '2024']
-    df = df[df['Date'].str[:4].isin(years_to_keep)]
-   
-   # --- STEP 8: FINAL CLEANUP & SORTING ---
+    # --- STEP 12: FINAL CLEANUP ---
+    df = df.drop(columns=['Date_dt', 'Year', 'Quarter'])
 
-    # Drop temporary helpers and ensure chronological order for time-series analysis
-    df = df.drop(columns=['Date_dt'])
-    df = df.sort_values(by='Date', ascending=True).reset_index(drop=True)
+    df = df.sort_values(by='Date').reset_index(drop=True)
 
     return df
 
+
 if __name__ == "__main__":
-   
-    # Define file paths for the automated processing pipeline
+
     input_file = '../data/raw/abs_internationalstudent_monthly.csv'
+
     output_folder = Path('../data/clean')
+    output_folder.mkdir(parents=True, exist_ok=True)
+
     output_file = output_folder / 'cleaned_internationalstudent.csv'
 
-    # Execute the processing function
     final_df = process_internationalstudents_data(input_file)
 
-    # --- STEP 9: EXPORTING CLEANED DATA ---
-
-    # Save output to 'clean' folder
     final_df.to_csv(output_file, index=False)
 
-    print(f"--- Process Complete ---")
+    print("--- Process Complete ---")
     print(f"File successfully saved to: {output_file}")
     print(final_df.head())
-    
+
 # %% Merge Datasets into One Master Dataset
 
 """
@@ -606,5 +623,4 @@ df_final = df_long.pivot_table(index=['Date', 'State', 'GDP ($ million)', 'Unemp
 
 # Save the final research-ready dataset
 df_final.to_csv('../data/clean/master_dataset.csv', index=False)
-
-
+# %%
