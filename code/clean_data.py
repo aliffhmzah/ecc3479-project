@@ -623,4 +623,3 @@ df_final = df_long.pivot_table(index=['Date', 'State', 'GDP ($ million)', 'Unemp
 
 # Save the final research-ready dataset
 df_final.to_csv('../data/clean/master_dataset.csv', index=False)
-# %%
