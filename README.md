@@ -179,14 +179,14 @@ jupyter notebook code/econometric_analysis.ipynb
 
 This notebook performs the full empirical analysis using the cleaned dataset:
 1. Loads the dataset from `data/clean/master_dataset.csv`.
-2. Constructs log-transformed and first-differenced variables.
+2. Constructs log-transformed variables and first differences to obtain quarterly log changes.
 3. Estimates the following regression models:
 
 * Model 1: Relationship between changes in rental prices and changes in international student enrolments
-* Model 2: Full model including controls (population, housing supply), state fixed effects, and a COVID-19 dummy
+* Model 2: Full model including controls for population and housing supply, state fixed effects, and a COVID-19 dummy variable
 
-4. Produces regression outputs and a formatted regression table.
-5. Interprets the main coefficients (direction, magnitude, and statistical significance).
-6. Discusses key limitations and threats to validity.
+4. Produces regression outputs and a formatted regression table (coefficients, standard errors, and model statistics).
+5. Interprets the main coefficients in terms of direction, magnitude, and statistical significance.
+6. Discusses key limitations and threats to validity of the analysis.
 
 All results reported in the analysis are generated directly from this notebook. No additional manual steps are required.
