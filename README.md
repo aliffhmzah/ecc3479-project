@@ -170,3 +170,23 @@ Scatter plots and correlation analysis revealed:
 
 However, these relationships are associational rather than causal, and may be influenced by omitted variables or underlying time trends.
 
+## Primary Econometric Analysis
+
+To reproduce the econometric results, run the analysis notebook:
+```
+jupyter notebook code/econometric_analysis.ipynb
+```
+
+This notebook performs the full empirical analysis using the cleaned dataset:
+1. Loads the dataset from `data/clean/master_dataset.csv`.
+2. Constructs log-transformed and first-differenced variables.
+3. Estimates the following regression models:
+
+* Model 1: Relationship between changes in rental prices and changes in international student enrolments
+* Model 2: Full model including controls (population, housing supply), state fixed effects, and a COVID-19 dummy
+
+4. Produces regression outputs and a formatted regression table.
+5. Interprets the main coefficients (direction, magnitude, and statistical significance).
+6. Discusses key limitations and threats to validity.
+
+All results reported in the analysis are generated directly from this notebook. No additional manual steps are required.
