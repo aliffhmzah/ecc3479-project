@@ -128,47 +128,18 @@ This pipeline ensures that all datasets are processed consistently and reproduci
 
 ## Exploratory Data Analysis
 
-### Overview of the Dataset
+To reproduce the econometric results, run the analysis notebook:
+```
+jupyter notebook code/exploratory_analysis.ipynb
+```
+The notebook:
+1. Loads the cleaned dataset from `data/clean/master_dataset.csv`.
+2. Performs descriptive statistics and correlation analysis.
+3. Visualises trends in rental prices and international student enrolments.
+4. Examines relationships between rental prices, population, and housing supply.
+5. Produces scatter plots and time-series figures used in the analysis.
 
-The dataset captures the relationship between rental prices and key economic and demographic factors in New South Wales (NSW) and Victoria (VIC) over time (2019–2024).
-
-* Rental prices (median weekly rent)
-* International student enrolments
-* Housing supply (number of dwellings)
-* Population
-* Unemployment rate
-* Gross Domestic Product (GDP)
-
-Overall, the dataset is structured as a state-level time series (panel dataset), allowing comparison across both time and regions.
-
-### Initial Variable Selection and Focus
-
-Initial exploration focused on:
-
-* Rental prices (main outcome variable)
-* International student enrolments (key explanatory variable)
-
-These were prioritised because they directly relate to the research question. Additional variables such as housing supply, population, unemployment rate, and GDP were then examined as potential control variables to account for broader economic conditions.
-
-### Distributional Characteristics of the Data
-
-Several key patterns emerged from summary statistics and skewness:
-
-* Rental prices showed positive skewness, indicating a concentration of observations at lower values with a tail toward higher rents.
-* Unemployment rate also displayed positive skewness, suggesting occasional spikes during certain periods.
-* Housing supply and population appeared approximately symmetrical, reflecting relatively stable growth over time.
-* International student enrolments showed mild skewness, likely influenced by structural changes.
-
-### Insights from Scatter Plots and Correlation Analysis
-
-Scatter plots and correlation analysis revealed:
-
-* A positive association between international student enrolments and rental prices, suggesting that higher student presence may be linked to increased housing demand.
-* A weak or mixed relationship between housing supply and rental prices, which may reflect supply constraints, lag effects, or geographic mismatches.
-* Population and rental prices showed a generally positive relationship, consistent with demand-side economic theory.
-* Some variables exhibited moderate correlations, but not at levels indicating severe multicollinearity.
-
-However, these relationships are associational rather than causal, and may be influenced by omitted variables or underlying time trends.
+All exploratory figures and summary statistics are generated directly from this notebook.
 
 ## Primary Econometric Analysis
 
