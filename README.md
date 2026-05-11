@@ -128,7 +128,7 @@ This pipeline ensures that all datasets are processed consistently and reproduci
 
 ## Exploratory Data Analysis
 
-To reproduce the econometric results, run the analysis notebook:
+To reproduce the exploratory data analysis results, run the notebook:
 ```
 jupyter notebook code/exploratory_analysis.ipynb
 ```
@@ -161,3 +161,25 @@ This notebook performs the full empirical analysis using the cleaned dataset:
 6. Discusses key limitations and threats to validity of the analysis.
 
 All results reported in the analysis are generated directly from this notebook. No additional manual steps are required.
+
+## Robustness Check
+
+To reproduce the robustness check result, run the analysis notebook:
+```
+jupyter notebook code/robustness_check.ipynb
+```
+This notebook performs additional specification checks using the cleaned dataset:
+1. Loads the dataset from `data/clean/master_dataset.csv`.
+2. Reconstructs the log-transformed and first-differenced variables used in the primary econometric analysis.
+3. Estimates several alternative specifications to test whether the main findings are sensitive to different modelling choices:
+
+* Check 1: HC3 robust standard errors
+* Check 2: Specification excluding the COVID-19 dummy variable
+* Check 3: Subsample analysis for New South Wales and Victoria separately
+* Check 4: Logged-level specification without first differencing
+
+4. Produces regression outputs and a combined robustness comparison table.
+5. Compares coefficient direction, magnitude, and statistical significance across specifications.
+6. Interprets whether the primary findings remain stable under alternative assumptions and samples.
+
+All robustness results reported in the analysis are generated directly from this notebook. No additional manual steps are required.
