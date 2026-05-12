@@ -177,6 +177,7 @@ This notebook performs additional specification checks using the cleaned dataset
 * Check 2: Specification excluding the COVID-19 dummy variable
 * Check 3: Subsample analysis for New South Wales and Victoria separately
 * Check 4: Logged-level specification without first differencing
+* Check 5: Lagged specification using one-quarter lagged student enrolments
 
 4. Produces regression outputs and a combined robustness comparison table.
 5. Compares coefficient direction, magnitude, and statistical significance across specifications.
