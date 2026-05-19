@@ -187,14 +187,14 @@ All robustness results reported in the analysis are generated directly from this
 
 ## Mapping of Tables and Figure in the PDF
 
-1. Table 1: Summary Statistics
+1. **Table 1: Summary Statistics**
 * Produced by `code/exploratory_analysis.ipynb`
 
-2. Table 2; Main Regression Results 
+2. **Table 2; Main Regression Results**
 * Produced by `code/econometric_analysis.ipynb`
 
-3. Table 3: Robustness Checks 
+3. **Table 3: Robustness Checks**
 * Produced by `code/robustness_check.ipynb`
 
-4. Figure 1: Scatterplot of Change in Rental Prices and International Student Enrolments by State
+4. **Figure 1: Scatterplot of Change in Rental Prices and International Student Enrolments by State**
 * Produced by `code/exploratory_analysis.ipynb`
