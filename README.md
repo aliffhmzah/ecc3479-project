@@ -184,3 +184,17 @@ This notebook performs additional specification checks using the cleaned dataset
 6. Interprets whether the primary findings remain stable under alternative assumptions and samples.
 
 All robustness results reported in the analysis are generated directly from this notebook. No additional manual steps are required.
+
+## Mapping of Tables and Figure in the PDF
+
+1. Table 1: Summary Statistics
+* Produced by `code/exploratory_analysis.ipynb`
+
+2. Table 2; Main Regression Results 
+* Produced by `code/econometric_analysis.ipynb`
+
+3. Table 3: Robustness Checks 
+* Produced by `code/robustness_check.ipynb`
+
+4. Figure 1: Scatterplot of Change in Rental Prices and International Student Enrolments by State
+* Produced by `code/exploratory_analysis.ipynb`
